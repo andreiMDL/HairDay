@@ -1,85 +1,85 @@
 <template>
-  <!-- <div class="form-container">
-    <div class="title-container">
-      <h2>Login</h2>
-    </div>
 
-    <div class="input-email">
-      <div class="input-group">
-        <div class="email-title">
-          <i class="bi bi-person"></i>
-          <label for="email">Email</label>
+  <div class="container" :class="{ 'right-panel-active': isPanelActive }" id="container">
+    <div class="form-container sign-up-container">
+      <form action="#" @submit.prevent="handleSignup">
+        <h1>Crie sua Conta</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="bi bi-google"></i></a>
+          <a href="#" class="social"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social"><i class="bi bi-instagram"></i></a>
         </div>
-        <input type="email" id="email" placeholder="seu@email.com" />
-      </div>
+        <span>ou entre com seu login e senha</span>
+        <input type="text" name="name" placeholder="Nome" v-model="signupName">
+        <input type="email" name="email" placeholder="Email" v-model="signupEmail">
+        <input type="password" name="password" placeholder="Senha" v-model="signupPassword">
+        <button class="button-signup">Cadastrar</button>
+      </form>
     </div>
-
-    <div class="input-password">
-      <div class="input-group">
-        <div class="password-title">
-          <i class="bi bi-key"></i>
-          <label for="password">Senha</label>
+    <div class="form-container sign-in-container">
+      <form action="#" @submit.prevent="handleLogin">
+        <h1>Faça login</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="bi bi-google"></i></a>
+          <a href="#" class="social"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social"><i class="bi bi-instagram"></i></a>
         </div>
-        <input type="password" id="password" placeholder="Sua senha" />
-      </div>
+        <span>ou entre com seu login e senha</span>
+        <input type="email" name="email" placeholder="Email" v-model="loginEmail">
+        <input type="password" name="password" placeholder="Senha" v-model="loginPassword">
+        <a class="forgot-password" href="#">Esqueci minha senha</a>
+
+        <button>Entrar</button>
+      </form>
     </div>
-
-    <button>Entrar</button> -->
-<div class="container" :class="{ 'right-panel-active': isPanelActive }" id="container">
-  <div class="form-container sign-up-container">
-    <form action="">
-      <h1>Crie sua Conta</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="bi bi-google"></i></a>
-        <a href="#" class="social"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social"><i class="bi bi-instagram"></i></a>
-      </div>
-      <span>ou entre com seu login e senha</span>
-      <input type="text" name="name" placeholder="Name">
-      <input type="email" name="email" placeholder="Email">
-      <input type="password" name="password" placeholder="Senha">
-      <button class="button-signup">Cadastrar</button>
-    </form>
-  </div>
-  <div class="form-container sign-in-container">
-    <form action="#">
-      <!-- <img src="/public/assets/Logo-blur.svg" alt=""> -->
-      <h1>Faça login</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="bi bi-google"></i></a>
-        <a href="#" class="social"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social"><i class="bi bi-instagram"></i></a>
-    </div>
-    <span>ou entre com seu login e senha</span>
-    <input type="email" name="email" placeholder="Email">
-    <input type="password" name="password" placeholder="Senha">
-    <a class="forgot-password" href="#">Esqueci minha senha</a>
-
-
-    <button >Entrar</button>
-    </form>
-  </div>
-  <div class="overlay-container">
-    <div class="overlay">
-      <div class="overlay-panel overlay-left">
-        <h1>Já possui uma conta?</h1>
-        <p>Faça login e agende seu horário agora mesmo!</p>
-        <button class="ghost" @click="isPanelActive = false" id="signIn">Entrar</button>
-      </div>
-      <div class="overlay-panel overlay-right">
-        <h1>Ainda não é cliente?</h1>
-        <p>Faça o cadastro e agende seu horário agora mesmo!</p>
-        <button class="ghost" @click="isPanelActive = true" id="signUp">Cadastre-se</button>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Já possui uma conta?</h1>
+          <p>Faça login e agende seu horário agora mesmo!</p>
+          <button class="ghost" @click="isPanelActive = false" id="signIn">Entrar</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Ainda não é cliente?</h1>
+          <p>Faça o cadastro e agende seu horário agora mesmo!</p>
+          <button class="ghost" @click="isPanelActive = true" id="signUp">Cadastre-se</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 </template>
 <script setup>
 import { ref } from 'vue';
 
 const isPanelActive = ref(false);
+
+const loginEmail = ref('');
+const loginPassword = ref('');
+
+const handleLogin = () => {
+  if (!loginEmail.value || !loginPassword.value) {
+    alert('Por favor, preencha o email e a senha.');
+    return;
+  }
+
+  console.log('Tentativa de login executada com suceeso!');
+  alert(`Login com ${loginEmail.value} será enviado para o servidor!`);
+};
+
+const signupName = ref('');
+const signupEmail = ref('');
+const signupPassword = ref('');
+
+const handleSignup = () => {
+  if (!signupEmail.value || !signupName.value || !signupPassword.value) {
+    alert('Por favor, preencha todos os campos para realizar seu cadastro!')
+    return;
+  }
+
+  console.log(`Cadastro realizado com sucesso! Seja bem vindo(a) ${signupName.value}!`);
+  alert(`Cadastro realizado com sucesso! Seja bem vindo(a) ${signupName.value}!`);
+}
 
 </script>
 <style scoped>
@@ -208,6 +208,7 @@ form {
 
 
 input {
+  color: #eee;
 	background-color: var(--color-gray-600);
 	border: 1px solid var(--color-gray-400);
   box-shadow: inset 0 0 10px black;
@@ -316,7 +317,6 @@ input:hover {
 	background-size: cover;
 	background-position: 0 0;
   border-radius: 2rem;
-	/* color: var(--color-gray-800); */
   text-shadow: 0 0 10px rgb(61, 33, 0);
 	position: relative;
 	left: -100%;
@@ -390,89 +390,4 @@ input:hover {
 	height: 40px;
 	width: 40px;
 }
-
-
-
-
-/* .form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding: 32px;
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem;
-  width: 100%;
-  height: 500px;
-  max-width: 400px;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.445);
-}
-
-h2 {
-  color: #f0f0f0;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-
-.input-group {
-  width: 22rem;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.input-email {
-  margin-top: 3rem;
-}
-
-.email-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.password-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-label {
-  color: #a0a0a0;
-  font-size: 14px;
-}
-
-input {
-  background-color: var(--color-gray-600);
-  border: 1px solid #555;
-  border-radius: 2rem;
-  padding: 12px;
-  color: #f0f0f0;
-  font-size: 16px;
-}
-
-input::placeholder {
-  color: #777;
-}
-
-button {
-  background-color: var(--color-yellow);
-  color: var(--color-gray-700);
-  border: none;
-  padding: 12px;
-  border-radius: 2rem;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  text-transform: uppercase;
-  margin-top: auto;
-  transition: ease .2s;
-  width: 15rem;
-}
-
-button:hover {
-  box-shadow: 0 0px 10px rgb(253, 184, 55);
-  scale: 1.03;
-} */
 </style>

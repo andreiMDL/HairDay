@@ -1,14 +1,9 @@
+<template>
+  <RouterView />
+</template>
 <script setup>
 import './assets/main.css';
-import AuthPage from './views/AuthPage.vue';
 </script>
-
-<template>
-  <main>
-    <AuthPage />
-  </main>
-</template>
-
 <style scoped>
 * {
   font-family: var(--font-family-base);
