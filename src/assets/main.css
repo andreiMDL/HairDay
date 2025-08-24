@@ -20,6 +20,10 @@
 body {
   margin: 0;
   font-family: var(--font-family-base);
+  background-image: url('./images/bg-gradient-5.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   background-color: var(--color-gray-800);
   color: var(--color-gray-100);
 }

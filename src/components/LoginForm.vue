@@ -1,5 +1,4 @@
 <template>
-
   <div class="container" :class="{ 'right-panel-active': isPanelActive }" id="container">
     <div class="form-container sign-up-container">
       <form action="#" @submit.prevent="handleSignup">
@@ -51,7 +50,9 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isPanelActive = ref(false);
 
 const loginEmail = ref('');
@@ -65,6 +66,7 @@ const handleLogin = () => {
 
   console.log('Tentativa de login executada com suceeso!');
   alert(`Login com ${loginEmail.value} será enviado para o servidor!`);
+  router.push('/agenda');
 };
 
 const signupName = ref('');
@@ -93,8 +95,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
+  flex-direction: column;
 	height: 100vh;
 	margin: -20px 0 50px;
 }
