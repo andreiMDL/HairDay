@@ -1,8 +1,17 @@
 <template>
-  <VueDatePicker v-model="date" class="custom-datepicker"></VueDatePicker>
+  <VueDatePicker v-model="date" class="custom-datepicker" week-start="0" :locale="locale" month-name-format="long"
+    :dayNames="dayNames">
+  </VueDatePicker>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
+import { ptBR } from 'date-fns/locale';
 
+const date = ref(new Date());
+
+const dayNames = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+
+const locale = ptBR;
 </script>
 <style>
 .custom-datepicker {
@@ -29,7 +38,6 @@
   border: 1px solid var(--color-gray-800);
   border-radius: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  /* color: #fff; */
 }
 
 .dp__today {
@@ -50,5 +58,61 @@
 
 .dp__arrow_top {
   display: none;
+}
+
+.dp--tp-wrap {
+  display: none;
+}
+
+.dp__action_row {
+  display: none;
+}
+
+.dp__calendar_header_separator {
+  display: none;
+}
+
+.dp__menu_inner {
+  /* width: 400px; */
+}
+
+.dp__instance_calendar {
+  width: 350px;
+}
+
+.dp__month_year_select {
+  justify-content: center;
+  align-items: center;
+}
+
+.dp__month_year_wrap {
+  padding-block: 5px;
+  justify-content: center;
+  margin-left: auto;
+  gap: 0;
+  color: aqua;
+}
+
+.dp__btn {
+  color: #fff;
+  font-weight: 500;
+}
+
+.dp__calendar_item {
+  padding: 5px;
+  /* border: 1px solid red; */
+}
+
+.dp__calendar_header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  padding: 5px;
+}
+
+.dp__calendar_header_item {
+  align-items: center;
+  justify-self: auto;
+
 }
 </style>

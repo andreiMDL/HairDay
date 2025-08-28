@@ -13,12 +13,11 @@
 import DpCalendar from '@/components/DpCalendar.vue'
 </script>
 <style>
+
 body {
   justify-content: center;
   align-items: center;
 }
-
-
 
 .container {
   width: 32rem;
