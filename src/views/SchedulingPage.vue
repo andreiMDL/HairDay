@@ -6,28 +6,76 @@
       <div class="date-input-container">
         <DpCalendar />
       </div>
+      <div class="schedule-picker">
+        <span class="schedule-picker-title">Horários</span>
+        <p class="schedule-picker-subtitle">Manhã</p>
+        <div class="schedule-picker-morning">
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+        </div>
+        <p class="schedule-picker-subtitle">Tarde</p>
+        <div class="schedule-picker-morning">
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+        </div>
+        <p class="schedule-picker-subtitle">Noite</p>
+        <div class="schedule-picker-morning">
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+          <span class="avaiable-schedule">09:00</span>
+        </div>
+      </div>
+      <div class="client-dropdown">
+        <p class="schedule-picker-subtitle">Cliente</p>
+      </div>
+      <div class="select-customer">
+        <DropdownButton />
+      </div>
     </div>
   </div>
 </template>
 <script setup>
+import DropdownButton from './DropdownButton.vue';
 import DpCalendar from '@/components/DpCalendar.vue'
 </script>
 <style>
-
 body {
+  display: flex;
   justify-content: center;
   align-items: center;
+  margin-block: 4rem;
 }
 
 .container {
+  display: flex;
   width: 32rem;
-  height: 55rem;
+  min-height: 55rem;
   border-radius: 2rem;
-  background-color: var(--color-gray-700);
+  background-color: var(--color-gray-800);
+  border: 2px solid var(--color-gray-600);
+  /* border: 2px solid blue; */
+  box-shadow: 0 0 28px rgb(0, 0, 0);
+  padding-block: 3rem;
 }
 
 .schedule-container {
-  padding: 5rem;
+  /* margin-top: 5rem; */
+  margin-inline: auto;
+  max-width: 80%;
+  /* border: 1px solid red; */
 }
 
 .date-container {
@@ -87,5 +135,53 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+.schedule-picker {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid green; */
+  max-width: 100%;
+}
+
+.schedule-picker-title {
+  margin-top: 2rem;
+  font-weight: 600;
+  font-size: large;
+}
+
+.schedule-picker-subtitle {
+  margin-top: 1rem;
+  color: var(--color-gray-300);
+  font-weight: 500;
+  font-size: medium;
+}
+
+.schedule-picker-morning {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .45rem;
+  /* border: 1px solid red; */
+  margin: auto;
+}
+
+.avaiable-schedule {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  font-size: large;
+  border: 1px solid var(--color-gray-500);
+  background-color: var(--color-gray-600);
+  padding: 10px 25px;
+  border-radius: 1rem;
+  box-shadow: 0 0 8px black;
+}
+
+.select-customer {
+  margin-top: 2rem;
+}
+
+.client-dropdown {
+  color: var(--color-gray-300);
 }
 </style>

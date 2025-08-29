@@ -72,10 +72,6 @@ const locale = ptBR;
   display: none;
 }
 
-.dp__menu_inner {
-  /* width: 400px; */
-}
-
 .dp__instance_calendar {
   width: 350px;
 }
@@ -100,7 +96,6 @@ const locale = ptBR;
 
 .dp__calendar_item {
   padding: 5px;
-  /* border: 1px solid red; */
 }
 
 .dp__calendar_header {
