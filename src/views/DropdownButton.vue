@@ -40,10 +40,8 @@
 <script setup>
 import { ref } from 'vue';
 
-// Estado para controlar a visibilidade do dropdown
 const isOpen = ref(false);
 
-// Lista de clientes
 const clients = ref([
   { id: 1, name: 'Helena Souza' },
   { id: 2, name: 'João Silva' },
@@ -51,15 +49,12 @@ const clients = ref([
   { id: 4, name: 'Pedro Santos' },
 ]);
 
-// Estado para armazenar o cliente selecionado
 const selectedClient = ref(clients.value[0]);
 
-// Função para mostrar/ocultar a lista de opções
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value;
 };
 
-// Função para selecionar um cliente e fechar a lista
 const selectClient = (client) => {
   selectedClient.value = client;
   isOpen.value = false;
@@ -89,15 +84,16 @@ const selectClient = (client) => {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
-  background-color: #333;
-  border: 1px solid #555;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: inset 0 0 10px black;
-}
-
-.client-dropdown-button:hover {
-  background-color: #444;
+  background-color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-600);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .client-dropdown-button:hover {
+    background-color: var(--color-gray-600);
+    border: 1px solid var(--color-gray-900);
+    box-shadow: 0 0 5px black;
 }
 
 .client-info {
