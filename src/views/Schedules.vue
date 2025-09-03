@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-schedules">
     <div class="schedule-container">
       <div class="schedule-title">
         <img src="/public/assets/Logo-blur.svg" alt="">
@@ -53,7 +53,7 @@
 defineOptions({
   name: 'HairDaySchedules'
 });
-import DropdownButton from './DropdownButton.vue';
+import DropdownButton from '../components/DropdownButton.vue';
 import DpCalendar from '@/components/DpCalendar.vue'
 </script>
 <style>
@@ -63,14 +63,11 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-
 }
 
-.container {
+.container-schedules {
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  /* flex-direction: column; */
+  /* min-height: 100vh; */
 }
 
 img {
@@ -79,9 +76,9 @@ img {
 }
 
 .schedule-container {
-  background-color: var(--color-gray-800);
+  background-color: var(--color-gray-700);
   padding-inline: 3rem;
-  max-width: 40%;
+  /* max-width: 40%; */
   min-height: 95%;
   /* border: 1px solid red; */
 }

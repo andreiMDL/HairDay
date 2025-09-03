@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <Schedules />
+    <MyAgenda />
   </div>
 </template>
 <script setup>
+import MyAgenda from './MyAgenda.vue';
 import Schedules from './Schedules.vue';
 
 </script>
@@ -16,5 +18,10 @@ body {
   min-height: 100vh;
 }
 
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
 
 </style>

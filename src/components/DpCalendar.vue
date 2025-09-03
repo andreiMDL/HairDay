@@ -18,28 +18,25 @@ const locale = ptBR;
   --dp-icon-color: var(--color-yellow);
   --dp-background-color: var(--color-gray-700);
   --dp-border-color: var(--color-gray-600);
-    --dp-border-radius: .5rem;
-  
-    --dp-input-padding: 0.75rem 30px 0.75rem 12px;
+  --dp-border-radius: .5rem;
+  --dp-input-padding: 0.75rem 30px 0.75rem 12px;
     --dp-border-color-hover: var(--color-yellow);
     --dp-color: white;
   }
-  
-  
   .custom-datepicker .dp__input:hover {
     background-color: var(--color-gray-600);
     border: 1px solid var(--color-gray-900);
     box-shadow: 0 0 5px black;
   }
-  
+
   .dp__input_wrap {
     display: flex;
     align-items: center;
     align-content: center;
   }
-  
+
   .dp__input {
-  
+
     color: #fff;
 }
 
