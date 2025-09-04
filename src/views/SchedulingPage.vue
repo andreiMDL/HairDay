@@ -15,13 +15,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .container {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 </style>

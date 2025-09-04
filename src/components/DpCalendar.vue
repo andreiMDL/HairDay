@@ -1,6 +1,6 @@
 <template>
   <VueDatePicker v-model="date" class="custom-datepicker" week-start="0" :locale="locale" month-name-format="long"
-    :dayNames="dayNames">
+    :dayNames="dayNames" format="dd/MM/yyyy">
   </VueDatePicker>
 </template>
 <script setup>
