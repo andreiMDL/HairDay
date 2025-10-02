@@ -17,21 +17,18 @@
         </div>
         <div class="morning-list-body">
           <ul class="schedule-item-list">
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
+            <li
+              v-for="(appointment, index) in morningAppointments"
+              v-bind:key="index"
+              class="schedule-item"
+            >
+              <span class="scheduled-time">{{ appointment.time }}</span>
+              <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
-            </li>
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
-            </li>
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
+            <li
+              v-if="appointments.length === 0"
+              class="schedule-item">
+              <span>Nenhum agendamento para hoje.</span>
             </li>
           </ul>
         </div>
@@ -44,9 +41,18 @@
         </div>
         <div class="evening-list-body">
           <ul class="schedule-item-list">
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
+            <li
+              v-for="(appointment, index) in eveningAppointments"
+              v-bind:key="index"
+              class="schedule-item"
+            >
+              <span class="scheduled-time">{{ appointment.time }}</span>
+              <span class="scheduled-customer">{{ appointment.client }}</span>
+            </li>
+            <li
+              v-if="appointments.length === 0"
+              class="schedule-item">
+              <span>Nenhum agendamento para hoje.</span>
             </li>
           </ul>
         </div>
@@ -59,21 +65,18 @@
         </div>
         <div class="night-list-body">
           <ul class="schedule-item-list">
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
+            <li
+              v-for="(appointment, index) in nightAppointments"
+              v-bind:key="index"
+              class="schedule-item"
+            >
+              <span class="scheduled-time">{{ appointment.time }}</span>
+              <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
-            </li>
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
-            </li>
-            <li class="schedule-item">
-              <span class="scheduled-time">09:00</span>
-              <span class="scheduled-customer">Helena Souza</span>
+            <li
+              v-if="appointments.length === 0"
+              class="schedule-item">
+              <span>Nenhum agendamento para hoje.</span>
             </li>
           </ul>
         </div>
@@ -82,10 +85,36 @@
   </div>
 </template>
 <script setup>
+import { computed } from 'vue';
+import { useAppointmentsStore } from '@/stores/appointments';
 import DpCalendar from '@/components/DpCalendar.vue';
 
 defineOptions({
   name: 'HairDaySchedules'
+});
+
+const appointmentsStore = useAppointmentsStore();
+const appointments = computed(() => appointmentsStore.allAppointments);
+
+const morningAppointments = computed(() => {
+  return appointmentsStore.allAppointments.filter(app => {
+    const hour = parseInt(app.time.split(':')[0]);
+    return hour < 12;
+  });
+});
+
+const eveningAppointments = computed(() => {
+  return appointmentsStore.allAppointments.filter(app => {
+    const hour = parseInt(app.time.split(':')[0]);
+    return hour >= 12 && hour < 18;
+  });
+});
+
+const nightAppointments = computed(() => {
+  return appointmentsStore.allAppointments.filter(app => {
+    const hour = parseInt(app.time.split(':')[0]);
+    return hour >= 18 && hour < 21;
+  });
 });
 
 </script>
@@ -225,7 +254,6 @@ body {
 .schedule-item-list {
   appearance: none;
   list-style: none;
-  /* border: 1px solid red; */
 }
 
 .schedule-item {

@@ -3,12 +3,6 @@
     <div class="form-container sign-up-container">
       <form action="#" @submit.prevent="handleSignup">
         <h1>Crie sua Conta</h1>
-        <div class="social-container">
-          <a href="#" class="social"><i class="bi bi-google"></i></a>
-          <a href="#" class="social"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social"><i class="bi bi-instagram"></i></a>
-        </div>
-        <span>ou entre com seu login e senha</span>
         <input type="text" name="name" placeholder="Nome" v-model="signupName">
         <input type="email" name="email" placeholder="Email" v-model="signupEmail">
         <input type="password" name="password" placeholder="Senha" v-model="signupPassword">
@@ -18,12 +12,6 @@
     <div class="form-container sign-in-container">
       <form action="#" @submit.prevent="handleLogin">
         <h1>Faça login</h1>
-        <div class="social-container">
-          <a href="#" class="social"><i class="bi bi-google"></i></a>
-          <a href="#" class="social"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social"><i class="bi bi-instagram"></i></a>
-        </div>
-        <span>ou entre com seu login e senha</span>
         <input type="email" name="email" placeholder="Email" v-model="loginEmail">
         <input type="password" name="password" placeholder="Senha" v-model="loginPassword">
         <a class="forgot-password" href="#">Esqueci minha senha</a>
@@ -51,21 +39,56 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toast-notification';
+
 
 const router = useRouter();
 const isPanelActive = ref(false);
 
 const loginEmail = ref('');
 const loginPassword = ref('');
+const toast = useToast();
+
+
+const successLogin = () => {
+	toast.success('Login realizado com sucesso!', {
+		position: 'top',
+		duration: 3000,
+		dismissible: true,
+	});
+};
+
+const failedLogin = () => {
+	toast.error('Erro ao realizar login. Por favor, preencha o email e a senha.', {
+		position: 'top',
+		duration: 3000,
+		dismissible: true,
+	});
+};
+
+const successSingup = () => {
+	toast.success(`Cadastro realizado com sucesso! Seja bem vindo(a) ${signupName.value}!`, {
+		position: 'top',
+		duration: 3000,
+		dismissible: true,
+	});
+};
+
+const failedSingup = () => {
+	toast.error('Erro ao realizar cadastro, tente novamente!', {
+		position: 'top',
+		duration: 3000,
+		dismissible: true,
+	})
+}
 
 const handleLogin = () => {
   if (!loginEmail.value || !loginPassword.value) {
-    alert('Por favor, preencha o email e a senha.');
+    failedLogin();
     return;
   }
 
-  console.log('Tentativa de login executada com suceeso!');
-  alert(`Login com ${loginEmail.value} será enviado para o servidor!`);
+  successLogin();
   router.push('/agenda');
 };
 
@@ -75,12 +98,10 @@ const signupPassword = ref('');
 
 const handleSignup = () => {
   if (!signupEmail.value || !signupName.value || !signupPassword.value) {
-    alert('Por favor, preencha todos os campos para realizar seu cadastro!')
+    failedSingup();
     return;
   }
-
-  console.log(`Cadastro realizado com sucesso! Seja bem vindo(a) ${signupName.value}!`);
-  alert(`Cadastro realizado com sucesso! Seja bem vindo(a) ${signupName.value}!`);
+  successSingup();
 }
 
 </script>
@@ -105,8 +126,9 @@ img {
 }
 
 h1 {
-	font-weight: bold;
 	margin: 0;
+	margin-bottom: 1rem;
+	font-weight: bold;
 }
 
 
@@ -211,8 +233,8 @@ form {
 input {
   color: #eee;
 	background-color: var(--color-gray-600);
-	border: 1px solid var(--color-gray-400);
-  box-shadow: inset 0 0 10px black;
+	border: 1px solid var(--color-gray-800);
+  box-shadow: 0 0 10px black;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
@@ -223,13 +245,13 @@ input {
 input:focus {
   outline: none;
   border: 1px solid var(--color-yellow);
-  box-shadow: inset 0 0 10px black,
+  box-shadow: 0 0 10px black,
               0 0 5px rgb(255, 196, 0);
 }
 
 input:hover {
   border: 1px solid var(--color-yellow);
-  box-shadow: inset 0 0 10px black,
+  box-shadow: 0 0 10px black,
               0 0 5px rgb(255, 196, 0);
 }
 
@@ -390,5 +412,9 @@ input:hover {
 	margin: 0 10px;
 	height: 40px;
 	width: 40px;
+}
+
+.has-error {
+  border: 1px solid red;
 }
 </style>

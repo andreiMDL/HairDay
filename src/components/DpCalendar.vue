@@ -1,17 +1,36 @@
 <template>
-  <VueDatePicker v-model="date" class="custom-datepicker" week-start="0" :locale="locale" month-name-format="long"
-    :dayNames="dayNames" format="dd/MM/yyyy">
-  </VueDatePicker>
+  <VueDatePicker
+    :model-value="props.modelValue"
+    @date-update="updateDate"
+    class="custom-datepicker"
+    week-start="0"
+    :locale="locale"
+    month-name-format="long"
+    :disabled-week-days="disabledDays"
+    :day-names="dayNames"
+    format="dd/MM/yyyy"
+  />
 </template>
 <script setup>
-import { ref } from 'vue';
-import { ptBR } from 'date-fns/locale';
-
-const date = ref(new Date());
+import { defineProps, defineEmits } from 'vue'
 
 const dayNames = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+const locale = 'pt-BR';
+const disabledDays = [0];
 
-const locale = ptBR;
+const props = defineProps({
+  modelValue: {
+    type: Date,
+    default: null
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+function updateDate(novoValor) {
+  console.log('Sinal enviado do DpCalendar com a data:', novoValor)
+  emit('update:modelValue', novoValor)
+}
 </script>
 <style>
 .custom-datepicker {
@@ -20,9 +39,10 @@ const locale = ptBR;
   --dp-border-color: var(--color-gray-600);
   --dp-border-radius: .5rem;
   --dp-input-padding: 0.75rem 30px 0.75rem 12px;
-    --dp-border-color-hover: var(--color-yellow);
-    --dp-color: white;
+  --dp-border-color-hover: var(--color-yellow);
+  --dp-color: white;
   }
+
   .custom-datepicker .dp__input:hover {
     background-color: var(--color-gray-600);
     border: 1px solid var(--color-gray-900);
@@ -115,6 +135,11 @@ const locale = ptBR;
 .dp__calendar_header_item {
   align-items: center;
   justify-self: auto;
-
+  color: var(--color-yellow);
 }
+
+.dp--future {
+  color: var(--color-gray-200);
+}
+
 </style>

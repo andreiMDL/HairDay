@@ -89,7 +89,7 @@ const selectClient = (client) => {
     cursor: pointer;
     transition: all 0.2s;
   }
-  
+
   .client-dropdown-button:hover {
     background-color: var(--color-gray-600);
     border: 1px solid var(--color-gray-900);
@@ -105,7 +105,7 @@ const selectClient = (client) => {
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 0.75rem;
-  color: #FFC107; /* Cor amarela para o ícone */
+  color: #FFC107;
 }
 
 .client-icon svg {

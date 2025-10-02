@@ -1,7 +1,7 @@
 <template>
   <div class="auth-container">
     <div class="components-container">
-      <img src="/public/assets/Logo-blur.svg" alt="">
+      <img src="/assets/Logo-blur.svg" alt="">
       <LoginForm />
     </div>
   </div>
