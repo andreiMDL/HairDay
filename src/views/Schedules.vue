@@ -2,7 +2,6 @@
   <div class="container-schedules">
     <div class="schedule-container">
       <div class="schedule-title">
-        <img src="/assets/Logo-blur.svg" alt="">
         <h2>Agende um atendimento</h2>
         <p>Selecione a data, horário e informe o nome do cliente para criar o agendamento</p>
         <span class="schedule-input-title">Data</span>
@@ -24,8 +23,8 @@
               v-for="time in scheduleForSelectedDay.morning"
               v-bind:key="time"
               class="avaiable-schedule"
-              v-on:click="selectedHour = (selectedHour === time ? null : time)"
-              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour }"
+              v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
+              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }"
             >
               {{ time }}
             </span>
@@ -38,8 +37,8 @@
               v-for="time in scheduleForSelectedDay.evening"
               v-bind:key="time"
               class="avaiable-schedule"
-              v-on:click="selectedHour = (selectedHour === time ? null : time)"
-              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour }"
+              v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
+              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }"
             >
             {{ time }}
             </span>
@@ -52,8 +51,8 @@
               v-for="time in scheduleForSelectedDay.night"
               v-bind:key="time"
               class="avaiable-schedule"
-              v-on:click="selectedHour = (selectedHour === time ? null : time)"
-              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour }"
+              v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
+              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }"
               >
               {{ time }}
             </span>
@@ -103,13 +102,23 @@ const selectedHour = ref(null);
 const toast = useToast()
 const { errors, validate } = validateBeforeSubmit();
 
+const appointmentsForSelectedDay = computed(() => {
+  return appointmentsStore.allAppointments.filter(app => {
+    return dayjs(app.date).isSame(selectedDate.value, 'day');
+  });
+});
+
+function isTimeBooked(time) {
+  return appointmentsForSelectedDay.value.some(app => app.time === time);
+};
+
 const showSuccess = () => {
   toast.success('Agendamento realizado com sucesso!', {
     position: 'top',
     duration: 3000,
     dismissible: true,
-  })
-}
+  });
+};
 
 const showError = () =>
   toast.error('Preencha os campos obrigatórios.', {
@@ -130,12 +139,6 @@ function validateFields() {
   }
 
   showSuccess();
-  console.log('Agendamento válido!');
-  console.log({
-    client: customerName.value,
-    date: selectedDate.value,
-    time: selectedHour.value,
-  });
 
   const newAppointment = {
     client: customerName.value,
@@ -159,16 +162,13 @@ const scheduleForSelectedDay = computed(() => {
 
 </script>
 <style>
-body {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
 
 .container-schedules {
   display: flex;
+  /* flex: 0 0 450px; */
+  height: 100%;
+  /* overflow-y: auto; */
+  background-color: var(--color-gray-700);
 }
 
 img {
@@ -226,6 +226,7 @@ img {
   justify-content: center;
   align-items: center;
   background-color: var(--color-gray-600);
+  /* border: 2px solid var(--color-gray-600); */
   box-shadow: 0 0 10px black;
   padding: .5rem;
   border-radius: .5rem;
@@ -235,6 +236,8 @@ img {
 
 .avaiable-schedule:hover {
   background-color: var(--color-yellow);
+  /* border: 2px solid var(--color-yellow); */
+  scale: 1.05;
 }
 
 .selected-schedule {
@@ -244,7 +247,7 @@ img {
 }
 
 .selected-schedule:hover {
-  box-shadow: inset 0 0 15px rgb(0, 0, 0);
+  scale: 1.05;
 }
 
 .schedule-picker-container {
@@ -268,6 +271,12 @@ img {
   background-color: var(--color-yellow);
   border: none;
   border-radius: 1rem;
+  transition: .2s ease;
+}
+
+.submit-schedule:hover {
+  box-shadow: 0 0 10px var(--color-yellow);
+  scale: 1.05;
 }
 
 input {
@@ -297,6 +306,22 @@ input:hover {
 
 .has-error {
   border: 1px solid red;
+}
+
+.booked-schedule {
+  background-color: var(--color-gray-700);
+  border: 1px solid var(--color-gray-800);
+  box-shadow: inset 0 0 10px var(--color-gray-800);
+  color: var(--color-gray-400);
+  cursor: not-allowed;
+}
+
+.booked-schedule:hover {
+  background-color: var(--color-gray-700);
+  border: 1px solid var(--color-gray-800);
+  box-shadow: inset 0 0 10px var(--color-gray-800);
+  color: var(--color-gray-400);
+  cursor: not-allowed;
 }
 
 </style>

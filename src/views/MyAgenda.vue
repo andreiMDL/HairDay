@@ -26,7 +26,7 @@
               <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
             <li
-              v-if="appointments.length === 0"
+              v-if="morningAppointments.length === 0"
               class="schedule-item">
               <span>Nenhum agendamento para hoje.</span>
             </li>
@@ -50,7 +50,7 @@
               <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
             <li
-              v-if="appointments.length === 0"
+              v-if="eveningAppointments.length === 0"
               class="schedule-item">
               <span>Nenhum agendamento para hoje.</span>
             </li>
@@ -74,7 +74,7 @@
               <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
             <li
-              v-if="appointments.length === 0"
+              v-if="nightAppointments.length === 0"
               class="schedule-item">
               <span>Nenhum agendamento para hoje.</span>
             </li>
@@ -94,7 +94,7 @@ defineOptions({
 });
 
 const appointmentsStore = useAppointmentsStore();
-const appointments = computed(() => appointmentsStore.allAppointments);
+// const appointments = computed(() => appointmentsStore.allAppointments);
 
 const morningAppointments = computed(() => {
   return appointmentsStore.allAppointments.filter(app => {
