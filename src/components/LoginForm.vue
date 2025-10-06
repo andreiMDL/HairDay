@@ -23,18 +23,17 @@
       <div class="overlay">
         <div class="overlay-panel overlay-left">
           <h1>Já possui uma conta?</h1>
-          <p>Faça login e agende seu horário agora mesmo!</p>
+          <p>Faça login para acessar sua agenda e gerenciar seus horários.</p>
           <button class="ghost" @click="isPanelActive = false" id="signIn">Entrar</button>
         </div>
         <div class="overlay-panel overlay-right">
-          <h1>Ainda não é cliente?</h1>
-          <p>Faça o cadastro e agende seu horário agora mesmo!</p>
+          <h1>Ainda não é possui uma conta?</h1>
+          <p>Cadastre-se para começar a organizar seus agendamentos e simplificar seu dia a dia.</p>
           <button class="ghost" @click="isPanelActive = true" id="signUp">Cadastre-se</button>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 <script setup>
 import { ref } from 'vue';

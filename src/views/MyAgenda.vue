@@ -6,7 +6,9 @@
         <span>Consulte os seus cortes de cabelo agendados por dia</span>
       </div>
       <div class="container-datepicker">
-        <DpCalendar />
+        <DpCalendar
+          v-model="selectedDate"
+        />
       </div>
     </div>
     <div class="list-container">
@@ -85,33 +87,40 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useAppointmentsStore } from '@/stores/appointments';
 import DpCalendar from '@/components/DpCalendar.vue';
+import dayjs from 'dayjs';
 
 defineOptions({
   name: 'HairDaySchedules'
 });
 
 const appointmentsStore = useAppointmentsStore();
-// const appointments = computed(() => appointmentsStore.allAppointments);
+const selectedDate = ref(new Date());
+
+const appointmentsForDay = computed(() => {
+  return appointmentsStore.allAppointments.filter(app =>
+    dayjs(app.date).isSame(selectedDate.value, 'day')
+  );
+});
 
 const morningAppointments = computed(() => {
-  return appointmentsStore.allAppointments.filter(app => {
+  return appointmentsForDay.value.filter(app => {
     const hour = parseInt(app.time.split(':')[0]);
     return hour < 12;
   });
 });
 
 const eveningAppointments = computed(() => {
-  return appointmentsStore.allAppointments.filter(app => {
+  return appointmentsForDay.value.filter(app => {
     const hour = parseInt(app.time.split(':')[0]);
     return hour >= 12 && hour < 18;
   });
 });
 
 const nightAppointments = computed(() => {
-  return appointmentsStore.allAppointments.filter(app => {
+  return appointmentsForDay.value.filter(app => {
     const hour = parseInt(app.time.split(':')[0]);
     return hour >= 18 && hour < 21;
   });

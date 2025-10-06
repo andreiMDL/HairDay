@@ -63,6 +63,7 @@
         <p class="schedule-picker-subtitle">Cliente</p>
       </div>
       <div class="select-customer">
+        <!-- <DropdownButton/> -->
         <input
           type="customerName"
           name="customerName"
@@ -90,6 +91,7 @@ import { useToast } from "vue-toast-notification";
 import { useAppointmentsStore } from '@/stores/appointments';
 import DpCalendar from '@/components/DpCalendar.vue'
 import dayjs from 'dayjs';
+// import DropdownButton from '@/components/DropdownButton.vue';
 
 defineOptions({
   name: 'HairDaySchedules'
@@ -165,9 +167,10 @@ const scheduleForSelectedDay = computed(() => {
 
 .container-schedules {
   display: flex;
-  /* flex: 0 0 450px; */
-  height: 100%;
-  /* overflow-y: auto; */
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  box-sizing: border-box;
   background-color: var(--color-gray-700);
 }
 
