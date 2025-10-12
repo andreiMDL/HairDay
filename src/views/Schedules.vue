@@ -7,54 +7,41 @@
         <span class="schedule-input-title">Data</span>
       </div>
       <div class="date-input-container">
-        <DpCalendar
-          v-model="selectedDate"
-          :min-date="new Date()"
-        />
+        <DpCalendar v-model="selectedDate" :min-date="new Date()" />
       </div>
       <div class="schedule-picker">
         <span class="schedule-picker-title">Horários</span>
-        <div
-          v-if="scheduleForSelectedDay"
-          class="schedule-picker-container"
-        >
-          <p class="schedule-picker-subtitle">Manhã</p>
-          <div class="schedule-picker-morning">
-            <span
-              v-for="time in scheduleForSelectedDay.morning"
-              v-bind:key="time"
-              class="avaiable-schedule"
-              v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
-              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }"
-            >
-              {{ time }}
-            </span>
+        <div v-if="isDayAvailable">
+          <div v-if="scheduleForSelectedDay" class="schedule-picker-container">
+            <p class="schedule-picker-subtitle">Manhã</p>
+            <div class="schedule-picker-morning">
+              <span v-for="time in scheduleForSelectedDay.morning" v-bind:key="time" class="avaiable-schedule"
+                v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
+                v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }">
+                {{ time }}
+              </span>
+            </div>
           </div>
+        </div>
+        <div v-else class="unavailable-message">
+          <p>Não há horários disponíveis para este dia. Por favor, selecione outra data.</p>
         </div>
         <div class="schedule-picker-container">
           <p class="schedule-picker-subtitle">Tarde</p>
           <div class="schedule-picker-morning">
-            <span
-              v-for="time in scheduleForSelectedDay.evening"
-              v-bind:key="time"
-              class="avaiable-schedule"
+            <span v-for="time in scheduleForSelectedDay.evening" v-bind:key="time" class="avaiable-schedule"
               v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
-              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }"
-            >
-            {{ time }}
+              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }">
+              {{ time }}
             </span>
           </div>
         </div>
         <div class="schedule-picker-container">
           <p class="schedule-picker-subtitle">Noite</p>
           <div class="schedule-picker-morning">
-            <span
-              v-for="time in scheduleForSelectedDay.night"
-              v-bind:key="time"
-              class="avaiable-schedule"
+            <span v-for="time in scheduleForSelectedDay.night" v-bind:key="time" class="avaiable-schedule"
               v-on:click="!isTimeBooked(time) && (selectedHour = (selectedHour === time ? null : time))"
-              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }"
-              >
+              v-bind:class="{ 'selected-schedule': time === selectedHour, 'has-error': errors.selectedHour, 'booked-schedule': isTimeBooked(time) }">
               {{ time }}
             </span>
           </div>
@@ -65,19 +52,11 @@
       </div>
       <div class="select-customer">
         <!-- <DropdownButton/> -->
-        <input
-          type="customerName"
-          name="customerName"
-          placeholder="Cliente"
-          v-model="customerName"
-          v-bind:class="{ 'has-error': errors.customerName }"
-        >
+        <input type="customerName" name="customerName" placeholder="Cliente" v-model="customerName"
+          v-bind:class="{ 'has-error': errors.customerName }">
       </div>
       <div class="schedule-submit">
-        <button
-          class="submit-schedule"
-          v-on:click="validateFields"
-        >
+        <button class="submit-schedule" v-on:click="validateFields">
           AGENDAR
         </button>
       </div>
@@ -152,20 +131,30 @@ function validateFields() {
   appointmentsStore.addAppointment(newAppointment);
 };
 
+const isDayAvailable = computed(() => {
+  const dayNumber = dayjs(selectedDate.value).day();
+  const dayName = dayMap[dayNumber];
+  return !!avaiableDays[dayName];
+});
+
 const scheduleForSelectedDay = computed(() => {
   const dayNumber = dayjs(selectedDate.value).day();
   const dayName = dayMap[dayNumber];
   const daySchedules = avaiableDays[dayName];
 
-  console.log(dayNumber);
-  console.log(dayName);
-  console.log(daySchedules);
-  return daySchedules || null;
+  if (!daySchedules) {
+    return {
+      morning: [],
+      evening: [],
+      night: []
+    };
+  }
+
+  return daySchedules;
 });
 
 </script>
 <style>
-
 .container-schedules {
   display: flex;
   flex-direction: column;
@@ -285,12 +274,12 @@ img {
 
 input {
   color: #eee;
-	background-color: var(--color-gray-600);
-	border: 1px solid var(--color-gray-800);
+  background-color: var(--color-gray-600);
+  border: 1px solid var(--color-gray-800);
   box-shadow: 0 0 10px black;
-	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
   border-radius: 1rem;
   transition: .2s ease;
 }
@@ -299,13 +288,13 @@ input:focus {
   outline: none;
   border: 1px solid var(--color-yellow);
   box-shadow: 0 0 10px black,
-              0 0 5px rgb(255, 196, 0);
+    0 0 5px rgb(255, 196, 0);
 }
 
 input:hover {
   border: 1px solid var(--color-yellow);
   box-shadow: 0 0 10px black,
-              0 0 5px rgb(255, 196, 0);
+    0 0 5px rgb(255, 196, 0);
 }
 
 .has-error {
@@ -328,4 +317,15 @@ input:hover {
   cursor: not-allowed;
 }
 
+.unavailable-message {
+  display: flex;
+  margin-top: 1rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  align-items: center;
+  background-color: rgba(128, 98, 0, 0.349);
+  border: 2px solid var(--color-yellow);
+  border-radius: .5rem;
+  color: var(--color-yellow);
+}
 </style>
