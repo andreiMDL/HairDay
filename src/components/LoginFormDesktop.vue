@@ -1,44 +1,48 @@
 <template>
-  <div class="container" :class="{ 'right-panel-active': isPanelActive }" id="container">
-    <div class="form-container sign-up-container">
-      <form action="#" @submit.prevent="handleSignup">
-        <h1>Crie sua Conta</h1>
-        <input type="text" name="name" placeholder="Nome" v-model="signupName">
-        <input type="email" name="email" placeholder="Email" v-model="signupEmail">
-        <input type="password" name="password" placeholder="Senha" v-model="signupPassword">
-        <button class="button-signup">Cadastrar</button>
-      </form>
-    </div>
-    <div class="form-container sign-in-container">
-      <form action="#" @submit.prevent="handleLogin">
-        <h1>Faça login</h1>
-        <input type="email" name="email" placeholder="Email" v-model="loginEmail">
-        <input type="password" name="password" placeholder="Senha" v-model="loginPassword">
-        <a class="forgot-password" href="#">Esqueci minha senha</a>
-        <button>Entrar</button>
-      </form>
-    </div>
-    <div class="overlay-container">
-      <div class="overlay">
-        <div class="overlay-panel overlay-left">
-          <h1>Já possui uma conta?</h1>
-          <p>Faça login para acessar sua agenda e gerenciar seus horários.</p>
-          <button class="ghost" @click="isPanelActive = false" id="signIn">Entrar</button>
-        </div>
-        <div class="overlay-panel overlay-right">
-          <h1>Ainda não é possui uma conta?</h1>
-          <p>Cadastre-se para começar a organizar seus agendamentos e simplificar seu dia a dia.</p>
-          <button class="ghost" @click="isPanelActive = true" id="signUp">Cadastre-se</button>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container" :class="{ 'right-panel-active': isPanelActive }" id="container">
+		<div class="form-container sign-up-container">
+			<form action="#" @submit.prevent="handleSignup">
+				<h1>Crie sua Conta</h1>
+				<input type="text" name="name" placeholder="Nome" v-model="signupName"
+					v-bind:class="{ 'has-error': signupErrors.name }">
+				<input type="email" name="email" placeholder="Email" v-model="signupEmail"
+					v-bind:class="{ 'has-error': signupErrors.email }">
+				<input type="password" name="password" placeholder="Senha" v-model="signupPassword"
+					v-bind:class="{ 'has-error': signupErrors.password }">
+				<button class="button-signup">Cadastrar</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form action="#" @submit.prevent="handleLogin">
+				<h1>Faça login</h1>
+				<input type="email" name="email" placeholder="Email" v-model="loginEmail"
+					v-bind:class="{ 'has-error': loginErrors.email }">
+				<input type="password" name="password" placeholder="Senha" v-model="loginPassword"
+					v-bind:class="{ 'has-error': loginErrors.email }">
+				<a class="forgot-password" href="#">Esqueci minha senha</a>
+				<button>Entrar</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Já possui uma conta?</h1>
+					<p>Faça login para acessar sua agenda e gerenciar seus horários.</p>
+					<button class="ghost" @click="isPanelActive = false" id="login">Entrar</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Ainda não é possui uma conta?</h1>
+					<p>Cadastre-se para começar a organizar seus agendamentos e simplificar seu dia a dia.</p>
+					<button class="ghost" @click="isPanelActive = true" id="signUp">Cadastre-se</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
-
 
 const router = useRouter();
 const isPanelActive = ref(false);
@@ -47,6 +51,16 @@ const loginEmail = ref('');
 const loginPassword = ref('');
 const toast = useToast();
 
+const signupErrors = reactive({
+	name: false,
+	email: false,
+	password: false,
+});
+
+const loginErrors = reactive({
+	email: false,
+	password: false,
+});
 
 const successLogin = () => {
 	toast.success('Login realizado com sucesso!', {
@@ -64,7 +78,7 @@ const failedLogin = () => {
 	});
 };
 
-const successSingup = () => {
+const successSignup = () => {
 	toast.success(`Cadastro realizado com sucesso! Seja bem vindo(a) ${signupName.value}!`, {
 		position: 'top',
 		duration: 3000,
@@ -81,7 +95,21 @@ const failedSingup = () => {
 }
 
 const handleLogin = () => {
-  if (!loginEmail.value || !loginPassword.value) {
+	loginErrors.email = false;
+	loginErrors.password = false;
+
+	let hasError = false;
+
+	if (!loginEmail.value) {
+		loginErrors.email = true;
+		hasError = true;
+	}
+	if (!loginPassword.value) {
+		loginErrors.password = true;
+		hasError = true;
+	}
+
+	if (hasError) {
     failedLogin();
     return;
   }
@@ -94,12 +122,32 @@ const signupName = ref('');
 const signupEmail = ref('');
 const signupPassword = ref('');
 
-const handleSignup = () => {
-  if (!signupEmail.value || !signupName.value || !signupPassword.value) {
-    failedSingup();
-    return;
-  }
-  successSingup();
+function handleSignup() {
+	signupErrors.name = false;
+	signupErrors.email = false;
+	signupErrors.password = false;
+
+	let hasError = false;
+
+	if (!signupName.value) {
+		signupErrors.name = true;
+		hasError = true;
+	}
+	if (!signupEmail.value) {
+		signupErrors.email = true;
+		hasError = true;
+	}
+	if (!signupPassword.value) {
+		signupErrors.password = true;
+		hasError = true;
+	}
+
+	if (hasError) {
+		failedSingup();
+		return;
+	}
+
+	successSignup();
 }
 
 </script>
@@ -412,5 +460,8 @@ input:hover {
 	width: 40px;
 }
 
-
+.has-error {
+	border-color: #e74c4c;
+	box-shadow: 0 0 5px #e74c4c;
+}
 </style>
