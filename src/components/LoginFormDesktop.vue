@@ -15,7 +15,6 @@
         <input type="email" name="email" placeholder="Email" v-model="loginEmail">
         <input type="password" name="password" placeholder="Senha" v-model="loginPassword">
         <a class="forgot-password" href="#">Esqueci minha senha</a>
-
         <button>Entrar</button>
       </form>
     </div>
@@ -413,7 +412,5 @@ input:hover {
 	width: 40px;
 }
 
-.has-error {
-  border: 1px solid red;
-}
+
 </style>

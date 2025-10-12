@@ -56,7 +56,6 @@ function updateDate(novoValor) {
   }
 
   .dp__input {
-
     color: #fff;
 }
 
@@ -125,6 +124,16 @@ function updateDate(novoValor) {
   padding: 5px;
 }
 
+.dp__cell_inner {
+  margin: auto;
+}
+
+.dp__cell_inner:hover {
+  background-color: var(--color-gray-600);
+  box-shadow: 0 0 5px black;
+  color: var(--color-yellow);
+}
+
 .dp__calendar_header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -140,6 +149,23 @@ function updateDate(novoValor) {
 
 .dp--future {
   color: var(--color-gray-200);
+}
+
+.dp__month_year_select {
+  color: var(--color-yellow);
+  font-size: large;
+  background-color: var(--color-gray-600);
+  box-shadow: 0 0 5px black;
+}
+
+.dp__month_year_select:hover {
+  color: var(--color-yellow);
+  background-color: var(--color-gray-700);
+  box-shadow: inset 0 0 5px black;
+}
+
+.dp__month_year_select:nth-child(2) {
+  display: none;
 }
 
 </style>

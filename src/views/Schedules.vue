@@ -9,6 +9,7 @@
       <div class="date-input-container">
         <DpCalendar
           v-model="selectedDate"
+          :min-date="new Date()"
         />
       </div>
       <div class="schedule-picker">
