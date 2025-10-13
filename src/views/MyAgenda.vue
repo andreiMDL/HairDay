@@ -3,12 +3,9 @@
     <div class="my-agenda-header">
       <div class="my-agenda-title">
         <h1>Sua Agenda</h1>
-        <span>Consulte os seus cortes de cabelo agendados por dia</span>
       </div>
       <div class="container-datepicker">
-        <DpCalendar
-          v-model="selectedDate"
-        />
+        <DpCalendar v-model="selectedDate" />
       </div>
     </div>
     <div class="list-container">
@@ -19,18 +16,12 @@
         </div>
         <div class="morning-list-body">
           <ul class="schedule-item-list">
-            <li
-              v-for="(appointment, index) in morningAppointments"
-              v-bind:key="index"
-              class="schedule-item"
-            >
+            <li v-for="(appointment, index) in morningAppointments" v-bind:key="index" class="schedule-item">
               <span class="scheduled-time">{{ appointment.time }}</span>
               <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
-            <li
-              v-if="morningAppointments.length === 0"
-              class="schedule-item">
-              <span>Nenhum agendamento para hoje.</span>
+            <li v-if="morningAppointments.length === 0" class="schedule-item">
+              <span>Nenhum agendamento para o dia selecionado.</span>
             </li>
           </ul>
         </div>
@@ -43,17 +34,11 @@
         </div>
         <div class="evening-list-body">
           <ul class="schedule-item-list">
-            <li
-              v-for="(appointment, index) in eveningAppointments"
-              v-bind:key="index"
-              class="schedule-item"
-            >
+            <li v-for="(appointment, index) in eveningAppointments" v-bind:key="index" class="schedule-item">
               <span class="scheduled-time">{{ appointment.time }}</span>
               <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
-            <li
-              v-if="eveningAppointments.length === 0"
-              class="schedule-item">
+            <li v-if="eveningAppointments.length === 0" class="schedule-item">
               <span>Nenhum agendamento para hoje.</span>
             </li>
           </ul>
@@ -67,17 +52,11 @@
         </div>
         <div class="night-list-body">
           <ul class="schedule-item-list">
-            <li
-              v-for="(appointment, index) in nightAppointments"
-              v-bind:key="index"
-              class="schedule-item"
-            >
+            <li v-for="(appointment, index) in nightAppointments" v-bind:key="index" class="schedule-item">
               <span class="scheduled-time">{{ appointment.time }}</span>
               <span class="scheduled-customer">{{ appointment.client }}</span>
             </li>
-            <li
-              v-if="nightAppointments.length === 0"
-              class="schedule-item">
+            <li v-if="nightAppointments.length === 0" class="schedule-item">
               <span>Nenhum agendamento para hoje.</span>
             </li>
           </ul>
@@ -143,6 +122,8 @@ body {
   flex-direction: column;
   box-shadow: inset 5px 0 20px var(--color-gray-900);
   flex: 2;
+  overflow-y: auto;
+  height: 100dvh;
 }
 
 .my-agenda-header {
@@ -162,6 +143,13 @@ body {
 .container-datepicker {
   margin-right: 0;
   margin-block: auto;
+}
+
+.list-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 1rem;
+  margin-right: -1rem;
 }
 
 .morning-list-container {
@@ -267,5 +255,25 @@ body {
 
 .schedule-item {
   padding-block: 1rem;
+}
+
+@media (max-width: 900px) {
+  .container-my-agenda {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    padding: 2rem 1rem;
+    box-shadow: inset 0 5px 20px var(--color-gray-900);
+  }
+
+  .my-agenda-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .container-datepicker {
+    margin: auto;
+    margin-block: auto;
+  }
 }
 </style>

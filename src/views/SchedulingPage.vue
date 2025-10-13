@@ -12,9 +12,16 @@ import Schedules from './Schedules.vue';
 
 .container {
   display: flex;
-  width: 100vw;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
+  width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+      overflow: visible;
+    }
+  }
 </style>
