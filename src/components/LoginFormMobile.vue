@@ -40,8 +40,10 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useToast } from 'vue-toast-notification';
+import { useRouter } from 'vue-router';
 
 const toast = useToast();
+const router = useRouter();
 
 const isSignUp = ref(false);
 
@@ -127,7 +129,6 @@ function handleSignup() {
 }
 
 function handlelogin() {
-  // Reseta os erros
   loginErrors.email = false;
   loginErrors.password = false;
 
@@ -148,6 +149,7 @@ function handlelogin() {
   }
 
   successLogin();
+  router.push('/agenda');
 }
 </script>
 <style scoped>
