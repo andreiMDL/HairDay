@@ -115,7 +115,7 @@ const handleLogin = () => {
   }
 
   successLogin();
-  router.push('/agenda');
+  router.push('/schedules');
 };
 
 const signupName = ref('');

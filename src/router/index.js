@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('@/views/AuthPage.vue')
     },
     {
-      path: '/agenda',
+      path: '/schedules',
       name: 'agenda',
       component: () => import('@/views/SchedulingPage.vue')
     }

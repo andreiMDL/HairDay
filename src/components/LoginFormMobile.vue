@@ -149,7 +149,7 @@ function handlelogin() {
   }
 
   successLogin();
-  router.push('/agenda');
+  router.push('/schedules');
 }
 </script>
 <style scoped>
