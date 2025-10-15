@@ -48,7 +48,7 @@
       <div class="night-list-container">
         <div class="night-list-header">
           <img src="/public/assets/yellow-moon-stars.svg" alt="">
-          <span>Tarde</span>
+          <span>Noite</span>
         </div>
         <div class="night-list-body">
           <ul class="schedule-item-list">
